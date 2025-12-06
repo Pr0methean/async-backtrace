@@ -41,7 +41,7 @@ macro_rules! location {
 /// A source code location in a function body.
 ///
 /// To construct a `Location`, use [`location!()`].
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Location {
     /// The name of the surrounding function.
     name: Option<Cow<'static, str>>,
