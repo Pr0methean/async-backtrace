@@ -1,3 +1,4 @@
+use std::borrow::Cow::{self, Borrowed, Owned};
 use std::fmt::Display;
 
 use futures::Future;
@@ -43,7 +44,7 @@ macro_rules! location {
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Location {
     /// The name of the surrounding function.
-    name: Option<&'static str>,
+    name: Option<Cow<'static, str>>,
     /// The file name, line number, and column number on which the surrounding
     /// function is defined.
     rest: &'static (&'static str, u32, u32),
@@ -59,7 +60,7 @@ impl Location {
         rest: &'static (&'static str, u32, u32),
     ) -> Self {
         Self {
-            name: Some(name),
+            name: Some(Borrowed(name)),
             rest,
         }
     }
@@ -87,6 +88,22 @@ impl Location {
     /// Produces the function name associated with this location.
     pub const fn name(&self) -> Option<&str> {
         self.name
+    }
+
+    /// Returns a copy with the name changed.
+    pub const fn named_const(self, name: &'static str) -> Self {
+        Location {
+            name: Some(Borrowed(name)),
+            ..self
+        }
+    }
+
+    /// Returns a copy with the name changed.
+    pub fn named(self, name: String) -> Self {
+        Location {
+            name: Some(Owned(name)),
+            ..self
+        }
     }
 
     /// Produces the file name associated with this location.
