@@ -85,8 +85,8 @@ impl Location {
     }
 
     /// Produces the function name associated with this location.
-    pub const fn name(&self) -> Option<&str> {
-        self.name
+    pub fn name(&self) -> Option<&str> {
+        self.name.as_deref()
     }
 
     /// Produces the file name associated with this location.
