@@ -196,7 +196,7 @@ impl Frame {
 
     /// Produces the [`Location`] associated with this frame.
     pub fn location(&self) -> Location {
-        self.location
+        self.location.clone()
     }
 
     /// Produces `true` if this `Frame` is uninitialized, otherwise false.

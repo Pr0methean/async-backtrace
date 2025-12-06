@@ -86,12 +86,12 @@ impl Location {
     }
 
     /// Produces the function name associated with this location.
-    pub const fn name(&self) -> Option<&str> {
-        self.name
+    pub fn name(&self) -> Option<&str> {
+        self.name.as_deref()
     }
 
     /// Returns a copy with the name changed.
-    pub const fn named_const(self, name: &'static str) -> Self {
+    pub fn named_const(self, name: &'static str) -> Self {
         Location {
             name: Some(Borrowed(name)),
             ..self
